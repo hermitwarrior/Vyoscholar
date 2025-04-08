@@ -1,0 +1,140 @@
+.getting-started {
+    padding: 4rem 2rem;
+    background-color: var(--dark-blue);
+}
+
+.content-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+.drone-types, .anatomy-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.type-card, .part {
+    background-color: var(--medium-blue);
+    padding: 1.5rem;
+    border-radius: 6px;
+}
+
+.type-card h4, .part h4 {
+    color: var(--light-blue);
+    margin-bottom: 0.5rem;
+}
+
+.safety-tips {
+    background-color: var(--medium-blue);
+    padding: 1.5rem;
+    border-radius: 6px;
+}
+
+.safety-tips li {
+    margin-bottom: 0.5rem;
+}
+
+.racing-section {
+    padding: 4rem 2rem;
+    background-color: var(--medium-blue);
+}
+
+.racing-intro {
+    max-width: 800px;
+    margin: 0 auto 3rem;
+    text-align: center;
+}
+
+.racing-intro img {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-top: 1rem;
+}
+
+.racing-parts, .race-types {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+.photography-section {
+    padding: 4rem 2rem;
+    background-color: var(--dark-blue);
+}
+
+.photo-content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.intro {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 3rem;
+}
+
+.intro img {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-top: 1rem;
+}
+
+.camera-moves {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+.move {
+    background-color: var(--medium-blue);
+    padding: 1.5rem;
+    border-radius: 6px;
+}
+
+.move h4 {
+    color: var(--light-blue);
+    margin-bottom: 0.5rem;
+}
+
+.tips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.tip {
+    background-color: var(--medium-blue);
+    padding: 1.5rem;
+    border-radius: 6px;
+}
+
+.tip h4 {
+    color: var(--light-blue);
+    margin-bottom: 0.5rem;
+}
+
+@media (max-width: 768px) {
+    .content-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .hero h1 {
+        font-size: 2rem;
+    }
+    
+    .hero p {
+        font-size: 1rem;
+    }
+}

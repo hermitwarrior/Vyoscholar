@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drone Mission Lab</title>
+    <style>
+        :root {
+            --dark-blue: #0a192f;
+            --medium-blue: #172a45;
+            --light-blue: #64ffda;
+            --text-color: #ccd6f6;
+            --highlight: #1e90ff;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--dark-blue);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: var(--medium-blue);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .logo {
+            color: var(--light-blue);
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 2rem;
+        }
+        
+        nav ul li a {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--light-blue);
+        }
+        
+        .hero {
+            background: linear-gradient(rgba(10, 25, 47, 0.9), rgba(10, 25, 47, 0.9)), 
+                        url('drone-hero-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 2rem;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--light-blue);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin-bottom: 2rem;
+        }
+        
+        .btn {
+            background-color: var(--light-blue);
+            color: var(--dark-blue);
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+        
+        .btn:hover {
+            background-color: transparent;
+            color: var(--light-blue);
+            border: 1px solid var(--light-blue);
+        }
+        
+        .features {
+            padding: 4rem 2rem;
+            background-color: var(--medium-blue);
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--light-blue);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .feature-card {
+            background-color: var(--dark-blue);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .feature-card h3 {
+            color: var(--light-blue);
+            margin-bottom: 1rem;
+        }
+        
+        .feature-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        
+        .drones-section {
+            padding: 4rem 2rem;
+        }
+        
+        .drones-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .drone-card {
+            background-color: var(--medium-blue);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .drone-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        
+        .drone-info {
+            padding: 1.5rem;
+        }
+        
+        .drone-info h3 {
+            color: var(--light-blue);
+            margin-bottom: 0.5rem;
+        }
+        
+        .drone-info p {
+            margin-bottom: 1rem;
+        }
+        
+        .specs {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+        
+        .spec-item {
+            text-align: center;
+        }
+        
+        .spec-item span {
+            display: block;
+            font-size: 0.9rem;
+            color: #8892b0;
+        }
+        
+        .spec-item strong {
+            color: var(--light-blue);
+            font-size: 1.1rem;
+        }
+        
+        footer {
+            background-color: var(--medium-blue);
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links a {
+            color: var(--text-color);
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            color: var(--light-blue);
+        }
+        
+        .copyright {
+            color: #8892b0;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">Drone Mission Lab</div>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#drones">Drones</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#racing">Racing</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <section class="hero" id="home">
+        <h1>Master the Art of Drone Technology</h1>
+        <p>The essential handbook for drone enthusiasts - learn to fly, film, race, and explore with your drone</p>
+        <a href="#features" class="btn">Start Building</a>
+    </section>
+    
+    <section class="features" id="features">
+        <h2 class="section-title">Key Features</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <img src="drone-flying.jpg" alt="Drone Flying">
+                <h3>Master the Basics</h3>
+                <p>Learn to fly your very first drone, as well as charge it, transport it, clean it and many other essential skills.</p>
+            </div>
+            <div class="feature-card">
+                <img src="drone-models.jpg" alt="Drone Models">
+                <h3>All the Major Models</h3>
+                <p>From the 3DR Solo to the DJI Phantom, we look at the most successful drones on the market.</p>
+            </div>
+            <div class="feature-card">
+                <img src="drone-safety.jpg" alt="Drone Safety">
+                <h3>Stay Safe</h3>
+                <p>Owning a drone comes with rules and regulations - learn what it takes to be a responsible drone owner.</p>
+            </div>
+            <div class="feature-card">
+                <img src="drone-filming.jpg" alt="Drone Filming">
+                <h3>Film with Your Drone</h3>
+                <p>Discover all the creative things you can do with your drone, including making stunning videos.</p>
+            </div>
+            <div class="feature-card">
+                <img src="drone-racing.jpg" alt="Drone Racing">
+                <h3>Compete in Races</h3>
+                <p>You can add a competitive flair to your hobby by entering drone races.</p>
+            </div>
+            <div class="feature-card">
+                <img src="drone-future.jpg" alt="Drone Future">
+                <h3>The Future of Drones</h3>
+                <p>See how drones are changing the world and taking a vital role in nature conservation.</p>
+            </div>
+        </div>
+    </section>
+    
+    <section class="drones-section" id="drones">
+        <h2 class="section-title">Top Drones</h2>
+        <div class="drones-grid">
+            <div class="drone-card">
+                <img src="hubsan-x4.jpg" alt="HUBSAN X4 H107">
+                <div class="drone-info">
+                    <h3>HUBSAN X4 H107</h3>
+                    <p>Easy to use and good for stunts, the X4 is inexpensive and suitable for beginners.</p>
+                    <div class="specs">
+                        <div class="spec-item">
+                            <span>Size</span>
+                            <strong>Compact</strong>
+                        </div>
+                        <div class="spec-item">
+                            <span>Range</span>
+                            <strong>100m</strong>
+                        </div>
+                        <div class="spec-item">
+                            <span>Flight Modes</span>
+                            <strong>2</strong>
+                        </div>
+                    </div>
+                    <a href="#" class="btn">Learn More</a>
+                </div>
+            </div>
+            
+            <div class="drone-card">
+                <img src="3dr-solo.jpg" alt="3DR Solo">
+                <div class="drone-info">
+                    <h3>3DR Solo</h3>
+                    <p>3DR has worked with GoPro to create a smart, capable and easy-to-fly camera drone.</p>
+                    <div class="specs">
+                        <div class="spec-item">
+                            <span>Speed</span>
+                            <strong>55mph</strong>
+                        </div>
+                        <div class="spec-item">
+                            <span>Flight Time</span>
+                            <strong>25 min</strong>
+                        </div>
+                        <div class="spec-item">
+                            <span>Camera</span>
+                            <strong>GoPro</strong>
+                        </div>
+                    </div>
+                    <a href="#" class="btn">Learn More</a>
+                </div>
+            </div>
+            
+            <div class="drone-card">
+                <img src="parrot-bebop.jpg" alt="Parrot Bebop 2">
+                <div class="drone-info">
+                    <h3>Parrot Bebop 2</h3>
+                    <p>The Bebop 2 is a faster, longer-lasting drone that could be the ultimate flying machine.</p>
+                    <div class="specs">
+                        <div class="spec-item">
+                            <span>Speed</span>
+                            <strong>37mph</strong>
+                        </div>
+                        <div class="spec-item">
+                            <span>Camera</span>
+                            <strong>14MP</strong>
+                        </div>
+                        <div class="spec-item">
+                            <span>Flight Time</span>
+                            <strong>25 min</strong>
+                        </div>
+                    </div>
+                    <a href="#" class="btn">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer id="contact">
+        <div class="footer-links">
+            <a href="#">About Us</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Contact</a>
+        </div>
+        <div class="copyright">
+            &copy; 2025 Drone Mission Lab. All rights reserved.
+        </div>
+    </footer>
+</body>
+</html>
