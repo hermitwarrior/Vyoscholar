@@ -1,0 +1,1 @@
+alert("welcome to my new skill")

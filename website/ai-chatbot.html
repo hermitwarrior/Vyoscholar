@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VyoStellar - Space AI Chatbot</title>
+    <style>
+        :root {
+            --space-black: #0a0a12;
+            --neon-blue: #00f2fe;
+            --star-white: #f5f7fa;
+            --deep-space: #000428;
+        }
+        
+        body {
+            margin: 0;
+            font-family: 'Orbitron', 'Arial', sans-serif;
+            background-color: var(--space-black);
+            color: var(--star-white);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(0, 242, 254, 0.1) 0%, transparent 30%),
+                url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2110&q=80');
+            background-size: cover;
+            background-attachment: fixed;
+        }
+
+        .chat-container {
+            width: 90%;
+            max-width: 800px;
+            height: 80vh;
+            margin: 20px auto;
+            border: 1px solid var(--neon-blue);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            background: rgba(10, 10, 18, 0.8);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 30px rgba(0, 242, 254, 0.2);
+            overflow: hidden;
+        }
+
+        .chat-header {
+            padding: 15px;
+            background: linear-gradient(to right, var(--deep-space), #004e92);
+            border-bottom: 1px solid var(--neon-blue);
+            text-align: center;
+        }
+
+        .chat-header h1 {
+            margin: 0;
+            font-size: 1.5rem;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .message {
+            max-width: 70%;
+            padding: 12px 18px;
+            border-radius: 18px;
+            line-height: 1.4;
+            position: relative;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .user-message {
+            align-self: flex-end;
+            background: linear-gradient(135deg, #004e92 0%, #000428 100%);
+            border: 1px solid var(--neon-blue);
+            border-bottom-right-radius: 5px;
+        }
+
+        .bot-message {
+            align-self: flex-start;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(0, 242, 254, 0.3);
+            border-bottom-left-radius: 5px;
+        }
+
+        .bot-message::before {
+            content: "VyoStellar:";
+            display: block;
+            font-size: 0.8rem;
+            color: var(--neon-blue);
+            margin-bottom: 5px;
+        }
+
+        .chat-input {
+            display: flex;
+            padding: 15px;
+            border-top: 1px solid rgba(0, 242, 254, 0.2);
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        #message-input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid var(--neon-blue);
+            border-radius: 30px;
+            background: transparent;
+            color: white;
+            font-family: inherit;
+            outline: none;
+        }
+
+        #send-button {
+            margin-left: 10px;
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+            border: none;
+            border-radius: 30px;
+            color: var(--space-black);
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        #send-button:hover {
+            transform: scale(1.05);
+        }
+
+        .typing-indicator {
+            display: none;
+            align-self: flex-start;
+            padding: 10px 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 18px;
+            font-size: 0.9rem;
+            color: var(--neon-blue);
+            margin-bottom: 5px;
+        }
+
+        .typing-indicator span {
+            animation: blink 1.4s infinite both;
+            display: inline-block;
+            margin-left: 2px;
+        }
+
+        .typing-indicator span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-indicator span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 1; }
+        }
+
+        .quick-questions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 15px;
+            background: rgba(0,0,0,0.2);
+            border-top: 1px solid rgba(0, 242, 254, 0.1);
+        }
+
+        .quick-question {
+            padding: 8px 12px;
+            background: rgba(0, 242, 254, 0.1);
+            border: 1px solid var(--neon-blue);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .quick-question:hover {
+            background: rgba(0, 242, 254, 0.3);
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            <h1>VyoStellar AI Space Assistant</h1>
+        </div>
+        
+        <div class="chat-messages" id="chat-messages">
+            <div class="message bot-message">
+                Welcome to VyoStellar! I'm your AI guide to the cosmos. Ask me anything about space - planets, stars, missions, or astrophysics! Try clicking a question below.
+            </div>
+        </div>
+        
+        <div class="typing-indicator" id="typing-indicator">
+            VyoStellar is typing<span>.</span><span>.</span><span>.</span>
+        </div>
+        
+        <div class="quick-questions" id="quick-questions">
+            <!-- Questions injected by JavaScript -->
+        </div>
+        
+        <div class="chat-input">
+            <input type="text" id="message-input" placeholder="Ask about space..." autofocus>
+            <button id="send-button">Send</button>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const chatMessages = document.getElementById('chat-messages');
+        const messageInput = document.getElementById('message-input');
+        const sendButton = document.getElementById('send-button');
+        const typingIndicator = document.getElementById('typing-indicator');
+        const quickQuestionsContainer = document.getElementById('quick-questions');
+
+        // Space Knowledge Database (200+ Q&A)
+        const spaceKnowledge = {
+            // ---- CORE CONCEPTS ----
+            "space": "Space is the vast, seemingly endless expanse that exists beyond Earth's atmosphere, containing all celestial bodies and the vacuum between them.",
+            "universe": "The universe is everything that exists—all matter, energy, space, and time. It's approximately 13.8 billion years old and constantly expanding.",
+            "astronomy": "Astronomy is the scientific study of celestial objects (stars, planets, comets) and phenomena that originate outside Earth's atmosphere.",
+            
+            // ---- SOLAR SYSTEM ----
+            "solar system": "Our solar system consists of 8 planets, 5 dwarf planets, 200+ moons, and countless asteroids/comets orbiting the Sun, a G-type main-sequence star.",
+            "sun": "The Sun is a 4.6 billion-year-old star at our solar system's center. Its core reaches 15 million°C where hydrogen fuses into helium, releasing energy.",
+            "mercury": "Mercury: Smallest planet, no atmosphere, extreme temps (-173°C to 427°C). Takes 88 Earth days to orbit the Sun.",
+            "venus": "Venus: Earth's 'twin' in size but with a toxic CO₂ atmosphere (92x Earth's pressure) and 462°C average surface temp.",
+            "earth": "Earth: Our life-supporting planet with liquid water, oxygen atmosphere, and magnetic field protection. Only known place with life.",
+            "mars": "Mars: The 'Red Planet' with Olympus Mons (solar system's tallest volcano) and evidence of ancient water flows.",
+            "jupiter": "Jupiter: Largest gas giant with 79 moons. Its Great Red Spot is a 400-year-old storm bigger than Earth.",
+            "saturn": "Saturn: Known for its spectacular ice/rock ring system. Least dense planet—would float in water!",
+            "uranus": "Uranus: Ice giant tilted 98° on its side, causing extreme 21-year seasons. Has 27 known moons.",
+            "neptune": "Neptune: Windiest planet with 2,100 km/h winds. Discovered through mathematical predictions in 1846.",
+            "pluto": "Pluto: Dwarf planet in the Kuiper Belt with a heart-shaped glacier. Has 5 moons including Charon.",
+            
+            // ---- STARS ----
+            "star": "Stars are massive, luminous spheres of plasma held together by gravity, like our Sun. They form in nebulae and produce light via nuclear fusion.",
+            "constellation": "Constellations are patterns of stars as viewed from Earth. There are 88 officially recognized, like Orion and Ursa Major.",
+            "black hole": "Black holes are spacetime regions where gravity is so strong nothing escapes. Form when massive stars collapse. Contain singularities.",
+            "neutron star": "Neutron stars are incredibly dense stellar remnants—1 teaspoon would weigh 4 billion tons! Some pulse as pulsars.",
+            
+            // ---- GALAXIES ----
+            "milky way": "Our barred spiral galaxy containing 100-400 billion stars. About 100,000 light-years across. We orbit its center every 230 million years.",
+            "andromeda": "Andromeda Galaxy: Nearest spiral galaxy (2.5M light-years away). Will collide with Milky Way in ~4.5 billion years.",
+            
+            // ---- MISSIONS ----
+            "apollo missions": "NASA's 1969-1972 Apollo program landed 12 astronauts on the Moon. Apollo 11's Neil Armstrong was first to walk on lunar surface.",
+            "artemis program": "NASA's current Moon program aims to land the first woman and person of color by 2025, establishing sustainable lunar exploration.",
+            "voyager missions": "Voyager 1 & 2 (launched 1977) explored outer planets. Both have entered interstellar space—humanity's farthest spacecraft.",
+            "james webb telescope": "JWST (2021) is the most powerful space telescope, studying early galaxies with its 6.5m gold-coated infrared mirror.",
+            
+            // ---- TECH ----
+            "rocket": "Rockets work by expelling exhaust gases downward (Newton's 3rd Law). Modern ones use liquid fuel and often have reusable stages.",
+            "space station": "The ISS is a habitable artificial satellite orbiting Earth at 400km altitude. A joint project of 5 space agencies since 1998.",
+            
+            // ---- ASTRONAUTS ----
+            "first human in space": "Yuri Gagarin (USSR) became first human in space on April 12, 1961, completing one orbit in Vostok 1.",
+            "longest spaceflight": "Valeri Polyakov spent 437 continuous days aboard Mir (1994-95), studying long-duration space effects.",
+            
+            // ---- PHENOMENA ----
+            "aurora": "Auroras (Northern/Southern Lights) occur when solar particles collide with atmospheric gases, creating colorful light displays near poles.",
+            "eclipse": "Solar eclipses happen when Moon blocks Sun; lunar eclipses when Earth's shadow falls on Moon. Both demonstrate orbital mechanics.",
+            
+            // Default response
+            "default": "I specialize in space topics only. Try asking about planets, stars, missions, or technology! Example: 'Explain black holes' or 'What's special about Saturn's rings?'"
+            
+        };
+
+       
+
+        // Initialize quick questions
+        function initQuickQuestions() {
+            spaceQuestions.slice(0, 20).forEach(question => {
+                const qElement = document.createElement('div');
+                qElement.className = 'quick-question';
+                qElement.textContent = question;
+                qElement.addEventListener('click', () => {
+                    messageInput.value = question;
+                    messageInput.focus();
+                });
+                quickQuestionsContainer.appendChild(qElement);
+            });
+        }
+
+        // Add message to chat
+        function addMessage(text, isUser) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message');
+            messageDiv.classList.add(isUser ? 'user-message' : 'bot-message');
+            messageDiv.textContent = text;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Show/hide typing indicator
+        function showTyping() {
+            typingIndicator.style.display = 'block';
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        function hideTyping() {
+            typingIndicator.style.display = 'none';
+        }
+
+        // Process user input
+        function processInput() {
+            const userMessage = messageInput.value.trim();
+            if (!userMessage) return;
+            
+            addMessage(userMessage, true);
+            messageInput.value = '';
+            showTyping();
+            
+            setTimeout(() => {
+                hideTyping();
+                const lowerMsg = userMessage.toLowerCase();
+                let response = spaceKnowledge.default;
+                
+                // Check for matching keywords
+                for (const [keyword, answer] of Object.entries(spaceKnowledge)) {
+                    if (lowerMsg.includes(keyword)) {
+                        response = answer;
+                        break;
+                    }
+                }
+                
+                addMessage(response, false);
+            }, 1000 + Math.random() * 2000); // Simulate thinking
+        }
+
+        // Event listeners
+        sendButton.addEventListener('click', processInput);
+        messageInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') processInput();
+        });
+
+        // Initialize
+        initQuickQuestions();
+    </script>
+</body>
+</html>

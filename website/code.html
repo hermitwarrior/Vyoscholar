@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VyoScholar | Space Exploration Reimagined</title>
+    <style>
+        /* Modern Apple-like Base */
+        :root {
+            --space-black: #0a0a12;
+            --neon-blue: #00f2fe;
+            --star-white: #f5f7fa;
+            --gradient-space: linear-gradient(135deg, #000428 0%, #004e92 100%);
+        }
+        
+        body {
+            margin: 0;
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--space-black);
+            color: var(--star-white);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Hero Section - Apple-style Parallax */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(0, 242, 254, 0.1) 0%, transparent 50%),
+                url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2110&q=80') center/cover no-repeat;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(to top, var(--space-black), transparent);
+            z-index: 1;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo {
+            font-size: 4.5rem;
+            font-weight: 700;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+            letter-spacing: -1.5px;
+        }
+
+        .tagline {
+            font-size: 1.8rem;
+            font-weight: 300;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        /* Feature Sections - Apple-like Scrolling */
+        .feature-section {
+            padding: 120px 0;
+            position: relative;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .feature-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            align-items: center;
+            gap: 60px;
+        }
+
+        .feature-text {
+            flex: 1;
+        }
+
+        .feature-image {
+            flex: 1;
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+            transform: translateZ(0);
+            min-height: 400px; /* Ensures space for image */
+            background: rgba(255, 255, 255, 0.05); /* Fallback if image fails */
+        }
+
+        .feature-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .feature-image:hover img {
+            transform: scale(1.05);
+        }
+
+        .feature-title {
+            font-size: 2.8rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .feature-desc {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            margin-bottom: 2rem;
+            max-width: 500px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 12px 30px;
+            background: transparent;
+            color: var(--neon-blue);
+            border: 2px solid var(--neon-blue);
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background: rgba(0, 242, 254, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Alternate Layout for Even Sections */
+        .feature-section:nth-child(even) .feature-content {
+            flex-direction: row-reverse;
+        }
+
+        /* Footer */
+        footer {
+            padding: 80px 0;
+            text-align: center;
+            background: linear-gradient(to top, #000428, #004e92);
+        }
+
+        .footer-logo {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 2rem;
+        }
+
+        .social-links a {
+            color: var(--star-white);
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: var(--neon-blue);
+        }
+
+        .copyright {
+            opacity: 0.6;
+            font-size: 0.9rem;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="logo">VyoScholar</h1>
+            <p class="tagline">The future of space education, powered by AI.</p>
+            <a href="#features" class="cta-button">Explore Features</a>
+        </div>
+    </section>
+
+    <!-- AI Chatbot Feature -->
+    <section id="features" class="feature-section">
+        <div class="feature-content">
+            <div class="feature-text">
+                <h2 class="feature-title">VyoStellar AI</h2>
+                <p class="feature-desc">
+                    Our space-exclusive AI assistant provides accurate, real-time answers about celestial bodies, 
+                    space missions, and astrophysics. No off-topic distractions — just the cosmos.
+                </p>
+                <a href="ai-chatbot.html" target="_blank" class="cta-button">Try the Chatbot</a>            </div>
+            <div class="feature-image">
+                <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80" alt="AI Chatbot Interface">
+            </div>
+        </div>
+    </section>
+
+    <!-- 3D Space Explorer -->
+    <section class="feature-section">
+        <div class="feature-content">
+            <div class="feature-text">
+                <h2 class="feature-title">3D Space Atlas</h2>
+                <p class="feature-desc">
+                    Navigate the universe in stunning 3D. Explore planets, stars, and galaxies with 
+                    scientifically accurate models and real-time simulations.
+                </p>
+                <a href="#" class="cta-button">Launch Explorer</a>
+            </div>
+            <div class="feature-image">
+                <img src="https://images.unsplash.com/photo-1707343844152-6d33a0bb32c3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80" alt="3D Space Visualization">
+            </div>
+        </div>
+    </section>
+
+    <!-- Drone Simulator (FIXED IMAGE) -->
+    <section class="feature-section">
+        <div class="feature-content">
+            <div class="feature-text">
+                <h2 class="feature-title">Drone Mission Lab</h2>
+                <p class="feature-desc">
+                    Design, build, and test drones for space research. Our simulator uses real physics 
+                    to prepare you for atmospheric exploration on Mars and beyond.
+                </p>
+                <a href="#" class="cta-button">Start Building</a>
+            </div>
+            <div class="feature-image">
+                <!-- Replaced with a guaranteed space drone image -->
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJ8tpGUva_JjqJOzwn7qhuqjGjEr1aydnmPA&s" alt="Space Drone Prototype">
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-logo">VyoScholar</div>
+        <div class="social-links">
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-github"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+        <p class="copyright">© 2025 VyoScholar. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Parallax effect for hero section
+        window.addEventListener('scroll', function() {
+            const scrollPosition = window.scrollY;
+            const hero = document.querySelector('.hero');
+            hero.style.backgroundPositionY = -scrollPosition * 0.5 + 'px';
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
